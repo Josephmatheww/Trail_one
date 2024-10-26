@@ -1,5 +1,8 @@
+// Loginn.js
 import React, { useState } from 'react';
 import './login.css';
+import TextInput from './TextInput';
+import { authenticateUser } from './Userapi';
 
 function Loginn() {
   const [username, setUsername] = useState('');
@@ -12,19 +15,7 @@ function Loginn() {
     setMessage(null);
 
     try {
-      const response = await fetch('https://staging-api.pomodore.in/api/user/authenticate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userName: username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Login failed. Please check your credentials.');
-      }
-
-      const data = await response.json();
+      const data = await authenticateUser(username, password);
       setUserData(data);
       setMessage('Login successful!');
     } catch (error) {
@@ -45,27 +36,20 @@ function Loginn() {
         <>
           <h2>Login</h2>
           <form onSubmit={handleLogin}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
-              />
-            </div>
+            <TextInput
+              label="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+            />
 
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-              />
-            </div>
+            <TextInput
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+            />
 
             <button type="submit" className="login-btn">Login</button>
           </form>
