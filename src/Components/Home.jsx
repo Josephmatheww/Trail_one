@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { userDataContext } from './context/ContextShare'; 
 import './home.css';
 import Navbar from './Navbar';
 
-const Home = ({ userData }) => {
+const Home = () => {
+  const { userData } = useContext(userDataContext); 
+
   return (
     <div>
       <Navbar userData={userData} />

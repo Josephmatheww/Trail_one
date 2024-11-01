@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { userDataContext } from './context/ContextShare'; // Import context
 
-const UserProfile = ({ userData, setUserData }) => {
+const UserProfile = () => {
+  const { userData, setUserData } = useContext(userDataContext); // Access userData and setUserData from context
   const location = useLocation();
   const navigate = useNavigate();
 

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './login.css';
-import TextInput from './TextInput'; // Ensure this path is correct
+import TextInput from './TextInput'; 
 import { authenticateUser } from './Userapi';
 import { useNavigate } from 'react-router-dom';
+import { userDataContext } from '../context/ContextShare';
 
-function Loginn({ setUserData }) {
+function Loginn() {
+  const { setUserData } = useContext(userDataContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
@@ -17,14 +19,14 @@ function Loginn({ setUserData }) {
 
     try {
       const data = await authenticateUser(username, password);
-      setUserData(data);
+      setUserData(data); 
       setMessage('Login successful!');
       navigate('/home', { state: { userData: data } });
     } catch (error) {
       setMessage(error.message);
     }
   };
-
+  
   return (
     <div className="login-container">
       <h2>Login</h2>
